@@ -1,0 +1,3 @@
+# config.py
+SUPABASE_URL = 'https://rvcggegchnihvuowdqkw.supabase.co'
+SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2Y2dnZWdjaG5paHZ1b3dkcWt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI1NTMyNjksImV4cCI6MjAyODEyOTI2OX0.JCerxuRrRuHqNnYF1UN6osdsEY0xPxMxtqLVl9LV6eg'

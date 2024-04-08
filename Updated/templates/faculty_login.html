@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SRMS - Faculty Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white font-sans">
+  <div class="container mx-auto py-8 text-center">
+    <h1 class="text-4xl md:text-5xl font-bold mb-8">Faculty Login</h1>
+    <div class="w-full max-w-xs mx-auto">
+      <form id="facultyLoginForm" class="bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="mb-4">
+          <label class="block text-gray-400 text-sm font-bold mb-2" for="facultyUsername">Username</label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="facultyUsername" type="text" placeholder="Username">
+        </div>
+        <div class="mb-6">
+          <label class="block text-gray-400 text-sm font-bold mb-2" for="facultyPassword">Password</label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="facultyPassword" type="password" placeholder="Password">
+        </div>
+        <div class="flex items-center justify-between">
+          <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="facultySignIn()">Sign In</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function facultySignIn() {
+      // Get input values
+      var username = document.getElementById('facultyUsername').value;
+      var password = document.getElementById('facultyPassword').value;
+      // You can add your authentication logic here
+      // For demonstration purposes, I'm redirecting to the faculty interface
+      window.location.href = 'faculty_interface';
+    }
+  </script>
+</body>
+</html>
