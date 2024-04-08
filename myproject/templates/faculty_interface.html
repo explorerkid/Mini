@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Interface</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+    }
+    .container-fluid {
+      padding-top: 20px;
+    }
+    .sidebar {
+      background-color: #343a40; /* Theme color from student interface */
+      color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      height: calc(100vh - 40px);
+      transition: all 0.3s ease;
+    }
+    .sidebar:hover {
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+    .nav-link {
+      color: #fff;
+      transition: color 0.3s ease;
+    }
+    .nav-link:hover {
+      color: #ffc107; /* Hover color from student interface */
+    }
+    .list-group-item {
+      background-color: #f8f9fa;
+      border: none;
+      border-radius: 5px;
+      margin-bottom: 5px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .list-group-item:hover {
+      background-color: #e9ecef;
+    }
+    .request-details {
+      display: none;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    .btn {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 sidebar">
+        <h4>Faculty Profile</h4>
+        <p><strong>Name:</strong>Oggy</p>
+        <p><strong>Department:</strong> ECS</p>
+        <p><strong>Faculty ID:</strong> FAC123</p> <!-- Faculty ID -->
+        <hr>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="receivedLink">Received Requests</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="approvedLink">Approved Requests</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="forwardedLink">Forwarded Requests</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="rejectedLink">Rejected Requests</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="passwordLink">Change Password</a> <!-- Change Password Link -->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="logoutLink">Logout</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Main content area -->
+      <div class="col-md-9">
+        <div id="mainContent" class="p-4">
+          <!-- Placeholder for received requests -->
+          <div id="receivedSection">
+            <h4>Received Requests</h4>
+            <ul id="receivedRequests" class="list-group">
+              <!-- Dynamically populated with received requests -->
+            </ul>
+          </div>
+
+          <!-- Placeholder for approved requests -->
+          <div id="approvedSection" style="display: none;">
+            <h4>Approved Requests</h4>
+            <p>Dummy scene for approved requests</p>
+          </div>
+
+          <!-- Placeholder for forwarded requests -->
+          <div id="forwardedSection" style="display: none;">
+            <h4>Forwarded Requests</h4>
+            <p>Dummy scene for forwarded requests</p>
+          </div>
+
+          <!-- Placeholder for rejected requests -->
+          <div id="rejectedSection" style="display: none;">
+            <h4>Rejected Requests</h4>
+            <p>Dummy scene for rejected requests</p>
+          </div>
+
+          <!-- Placeholder for request details -->
+          <div id="requestDetails" class="request-details"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Dummy data for demonstration
+    var receivedRequests = [
+      { requestId: 'REQ1', subject: 'Request 1', status: 'Pending', details: 'Details for Request 1' },
+      { requestId: 'REQ2', subject: 'Request 2', status: 'Returned', details: 'Details for Request 2' }
+    ];
+
+    // Function to populate received requests
+    function populateReceivedRequests() {
+      var receivedRequestsList = document.getElementById('receivedRequests');
+      receivedRequestsList.innerHTML = '';
+      receivedRequests.forEach(request => {
+        var listItem = document.createElement('li');
+        listItem.classList.add('list-group-item');
+        listItem.textContent = 'Subject: ' + request.subject + ', Status: ' + request.status;
+        receivedRequestsList.appendChild(listItem);
+        // Add click event to open individual request
+        listItem.addEventListener('click', function() {
+          showRequestDetails(request);
+        });
+      });
+    }
+
+    // Function to display request details
+    function showRequestDetails(request) {
+      var requestDetails = document.getElementById('requestDetails');
+      requestDetails.innerHTML = '<p><strong>Request ID:</strong> ' + request.requestId + '</p>' +
+                                  '<p><strong>Subject:</strong> ' + request.subject + '</p>' +
+                                  '<p><strong>Status:</strong> ' + request.status + '</p>' +
+                                  '<p><strong>Details:</strong> ' + request.details + '</p>' +
+                                  '<div class="actions">' +
+                                  '<button class="btn btn-success" onclick="approveRequest(\'' + request.requestId + '\')">Approve</button>' +
+                                  '<button class="btn btn-danger" onclick="rejectRequest(\'' + request.requestId + '\')">Reject</button>' +
+                                  '<button class="btn btn-primary" onclick="forwardRequest(\'' + request.requestId + '\')">Forward</button>' +
+                                  '<button class="btn btn-warning" onclick="returnForEdit(\'' + request.requestId + '\')">Return for Edit</button>' +
+                                  '</div>';
+      // Hide other request details
+      var allRequestDetails = document.querySelectorAll('.request-details');
+      allRequestDetails.forEach(function(detail) {
+        detail.style.display = 'none';
+      });
+      // Show current request details
+      requestDetails.style.display = 'block';
+    }
+
+    function approveRequest(requestId) {
+      console.log('Request approved:', requestId);
+    }
+
+    function rejectRequest(requestId) {
+      var commentReject = prompt('Enter reject comment:');
+      if (commentReject) {
+        console.log('Request rejected:', requestId, 'with comment:', commentReject);
+      }
+    }
+
+    function forwardRequest(requestId) {
+      var facultyId = prompt('Enter faculty ID:');
+      if (facultyId) {
+        console.log('Request forwarded to faculty:', facultyId, 'for', requestId);
+      }
+    }
+
+    function returnForEdit(requestId) {
+      var commentReturn = prompt('Enter return comment:');
+      if (commentReturn) {
+        console.log('Request returned for edit:', requestId, 'with comment:', commentReturn);
+      }
+    }
+
+    // Event listeners for sidebar links
+    document.getElementById('receivedLink').addEventListener('click', function(event) {
+      event.preventDefault();
+      showSection('receivedSection');
+    });
+
+    document.getElementById('approvedLink').addEventListener('click', function(event) {
+      event.preventDefault();
+      showSection('approvedSection');
+    });
+
+    document.getElementById('forwardedLink').addEventListener('click', function(event) {
+      event.preventDefault();
+      showSection('forwardedSection');
+    });
+
+    document.getElementById('rejectedLink').addEventListener('click', function(event) {
+      event.preventDefault();
+      showSection('rejectedSection');
+    });
+
+    document.getElementById('passwordLink').addEventListener('click', function(event) {
+      event.preventDefault();
+      changePassword();
+    });
+
+    document.getElementById('logoutLink').addEventListener('click', function(event) {
+      event.preventDefault();
+      logout();
+    });
+
+    // Function to change password
+    function changePassword() {
+      alert('Functionality to change password will be implemented soon!');
+    }
+
+    // Function to logout
+    function logout() {
+      alert('Logged out successfully!');
+    }
+
+    // Function to show section
+    function showSection(sectionId) {
+      var sections = ['receivedSection', 'approvedSection', 'forwardedSection', 'rejectedSection'];
+      sections.forEach(function(id) {
+        document.getElementById(id).style.display = id === sectionId ? 'block' : 'none';
+      });
+    }
+
+    // Initial population of received requests
+    populateReceivedRequests();
+  </script>
+</body>
+</html>
